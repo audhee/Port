@@ -1,4 +1,13 @@
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import {
+  EASE_PREMIUM,
+  VIEWPORT_ONCE,
+  fadeUp,
+  fadeUpScale,
+  staggerContainer,
+  transitionBase,
+} from '@/lib/motion';
 
 type Project = {
   title: string;
@@ -44,39 +53,77 @@ const PROJECTS: Project[] = [
 ];
 
 export default function SelectedWork() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="work" className="relative bg-ink-bg px-6 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-6xl">
-        {/* Section header */}
-        <div className="mb-14 md:mb-20">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent">
+        <motion.div
+          className="mb-14 md:mb-20"
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={staggerContainer}
+        >
+          <motion.span
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent"
+            variants={fadeUp}
+            transition={transitionBase}
+          >
             <span className="h-1.5 w-1.5 rounded-full bg-ink-accent" />
             Selected Work
-          </span>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl">
+          </motion.span>
+          <motion.h2
+            className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl"
+            variants={fadeUp}
+            transition={transitionBase}
+          >
             Things I've Built
-          </h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-muted text-balance">
+          </motion.h2>
+          <motion.p
+            className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-muted text-balance"
+            variants={fadeUp}
+            transition={transitionBase}
+          >
             A collection of projects where I explore AI, software engineering,
             automation, and practical problem solving.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        {/* Project grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7">
+        <motion.div
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7"
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={staggerContainer}
+        >
           {PROJECTS.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <article className="group relative flex flex-col rounded-2xl border border-ink-border/60 bg-ink-border/[0.07] p-7 transition-all duration-300 hover:border-ink-accent/60 hover:bg-ink-border/[0.12] hover:shadow-2xl hover:shadow-ink-accent/5 hover:-translate-y-1 md:p-8">
-      {/* Title row */}
+    <motion.article
+      variants={fadeUpScale}
+      transition={{ duration: 0.7, ease: EASE_PREMIUM }}
+      whileHover={
+        reduceMotion
+          ? undefined
+          : {
+              y: -4,
+              boxShadow: '0 24px 48px -20px rgba(140, 168, 136, 0.22)',
+              transition: { duration: 0.28, ease: EASE_PREMIUM },
+            }
+      }
+      className="group relative flex flex-col rounded-2xl border border-ink-border/60 bg-ink-border/[0.07] p-7 transition-colors duration-300 hover:border-ink-accent/60 hover:bg-ink-border/[0.12] md:p-8"
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-xl font-bold tracking-tight text-ink-text md:text-2xl">
@@ -89,12 +136,10 @@ function ProjectCard({ project }: { project: Project }) {
         <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-ink-muted transition-all duration-300 group-hover:text-ink-accent group-hover:rotate-45" />
       </div>
 
-      {/* Description */}
       <p className="mt-4 text-base leading-relaxed text-ink-muted">
         {project.description}
       </p>
 
-      {/* Tech tags */}
       <div className="mt-5 flex flex-wrap gap-2">
         {project.tech.map((t) => (
           <span
@@ -106,7 +151,6 @@ function ProjectCard({ project }: { project: Project }) {
         ))}
       </div>
 
-      {/* Link */}
       <a
         href={project.link}
         target="_blank"
@@ -116,6 +160,6 @@ function ProjectCard({ project }: { project: Project }) {
         View Project
         <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
       </a>
-    </article>
+    </motion.article>
   );
 }

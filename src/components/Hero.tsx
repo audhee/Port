@@ -1,17 +1,19 @@
 import { ArrowRight, Github, ChevronDown } from 'lucide-react';
-
-const TECH_TAGS = ['Java', 'Python', 'AI Automation', 'AI Agents', 'React', 'Spring Boot'];
+import NeuralBackground from '@/components/NeuralBackground';
+import TechMarquee from '@/components/TechMarquee';
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-ink-bg pt-32 pb-24 md:pt-44 md:pb-32">
-      {/* Subtle background gradient */}
+    <section className="relative overflow-hidden bg-ink-bg pt-36 pb-24 md:pt-48 md:pb-32">
+      {/* 3D Neural Network & Noise Background */}
+      <NeuralBackground />
+
+      {/* Subtle ambient glow overlay */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-ink-border/20 via-ink-border/5 to-transparent blur-3xl opacity-70" />
-        <div className="absolute right-0 top-1/3 h-[300px] w-[300px] rounded-full bg-ink-accent/5 blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-ink-border/20 via-ink-border/5 to-transparent blur-3xl opacity-60" />
       </div>
 
-      <div className="mx-auto max-w-4xl px-6 lg:px-10">
+      <div className="relative z-10 mx-auto max-w-4xl px-6 lg:px-10">
         {/* Uppercase label */}
         <div className="flex justify-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-ink-border/60 bg-ink-border/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
@@ -52,21 +54,14 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Tech tags */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-2.5">
-          {TECH_TAGS.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-ink-border/60 bg-transparent px-4 py-1.5 text-sm font-medium text-ink-muted transition-all duration-300 hover:border-ink-border hover:bg-ink-border/10 hover:text-ink-text hover:-translate-y-0.5"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+      </div>
+
+      <div className="relative z-10 w-full">
+        <TechMarquee />
       </div>
 
       {/* Scroll indicator */}
-      <div className="mt-16 flex flex-col items-center gap-2 md:mt-24">
+      <div className="mt-10 flex flex-col items-center gap-2 md:mt-14">
         <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ink-muted/70">
           Scroll for more
         </span>
