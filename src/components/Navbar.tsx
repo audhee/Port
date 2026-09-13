@@ -71,7 +71,18 @@ export default function Navbar() {
     >
       <nav className="mx-auto max-w-7xl px-6 lg:px-10" aria-label="Primary">
         <div className="flex h-20 items-center justify-between md:h-24 lg:h-28">
-          <a href="#" className="nav-logo nav-enter nav-enter--1">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+              window.history.pushState(null, '', window.location.pathname);
+            }}
+            className="nav-logo nav-enter nav-enter--1 font-heading"
+          >
             Dheeraj
           </a>
 
@@ -80,7 +91,19 @@ export default function Navbar() {
               <li key={link.label} className={`nav-enter nav-enter--${i + 2}`}>
                 <a
                   href={link.href}
-                  className={`nav-link${activeHref === link.href ? ' nav-link--active' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const targetId = link.href.slice(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                      targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      });
+                      window.history.pushState(null, '', link.href);
+                    }
+                  }}
+                  className={`nav-link${activeHref === link.href ? ' nav-link--active' : ''} font-body`}
                 >
                   {link.label}
                 </a>
@@ -89,7 +112,21 @@ export default function Navbar() {
           </ul>
 
           <div className="hidden md:block nav-enter nav-enter--7">
-            <a href="#contact" className="nav-cta">
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                const targetElement = document.getElementById('contact');
+                if (targetElement) {
+                  targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                  });
+                  window.history.pushState(null, '', '#contact');
+                }
+              }}
+              className="nav-cta font-body"
+            >
               Let's Connect
               <ArrowUpRight className="nav-cta__icon" strokeWidth={2.25} />
             </a>
@@ -120,8 +157,20 @@ export default function Navbar() {
             <li key={link.label}>
               <a
                 href={link.href}
-                className={`nav-overlay__link${activeHref === link.href ? ' nav-overlay__link--active' : ''}`}
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileOpen(false);
+                  const targetId = link.href.slice(1);
+                  const targetElement = document.getElementById(targetId);
+                  if (targetElement) {
+                    targetElement.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
+                    window.history.pushState(null, '', link.href);
+                  }
+                }}
+                className={`nav-overlay__link${activeHref === link.href ? ' nav-overlay__link--active' : ''} font-body`}
                 tabIndex={mobileOpen ? 0 : -1}
               >
                 {link.label}
@@ -131,8 +180,19 @@ export default function Navbar() {
           <li>
             <a
               href="#contact"
-              className="nav-cta nav-cta--block"
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileOpen(false);
+                const targetElement = document.getElementById('contact');
+                if (targetElement) {
+                  targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                  });
+                  window.history.pushState(null, '', '#contact');
+                }
+              }}
+              className="nav-cta nav-cta--block font-body"
               tabIndex={mobileOpen ? 0 : -1}
             >
               Let's Connect

@@ -15,7 +15,7 @@ export const transitionBase: Transition = {
 };
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -52,8 +52,18 @@ export const staggerFast: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.04,
+      staggerChildren: 0.07,
       delayChildren: 0.12,
+    },
+  },
+};
+
+export const staggerSkills: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.1,
     },
   },
 };

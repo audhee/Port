@@ -78,6 +78,14 @@ export default function Contact() {
           <div className="text-center">
             <a
               href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                });
+                window.history.pushState(null, '', window.location.pathname);
+              }}
               className="text-2xl font-bold tracking-tight text-ink-text transition-colors duration-300 hover:text-ink-accent"
             >
               Dheeraj

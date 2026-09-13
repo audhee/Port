@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { GraduationCap, Briefcase, MapPin } from 'lucide-react';
 
 const FACTS = [
@@ -19,37 +21,77 @@ const FACTS = [
 ] as const;
 
 export default function About() {
+  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 40]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   return (
-    <section id="about" className="relative overflow-hidden bg-ink-bg px-6 py-24 md:px-10 md:py-32">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-ink-bg px-6 py-24 md:px-10 md:py-32"
+    >
+      {/* Background photo with parallax */}
+      <motion.div
+        style={{ y, opacity }}
+        className="absolute inset-0 z-0 pointer-events-none"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-ink-bg via-ink-bg/70 to-ink-bg/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-bg via-transparent to-ink-bg" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-bg/95 via-transparent to-ink-bg/60" />
+        
+        <motion.img
+          src="/about-bg.jpg"
+          alt=""
+          className="absolute right-[-10%] top-0 h-full w-[70%] object-cover"
+          style={{
+            opacity: 0.4,
+            filter: 'grayscale(40%) contrast(90%) blur(6px) saturate(60%)',
+          }}
+        />
+        
+        {/* Vignette overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(7,7,5,0.85)_100%)]" />
+        
+        {/* Duotone overlay */}
+        <div className="absolute inset-0 mix-blend-multiply bg-ink-accent/8" />
+      </motion.div>
+
       {/* Ambient gradient blob */}
       <div
-        className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-ink-accent/10 blur-3xl md:h-96 md:w-96"
+        className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-ink-accent/10 blur-3xl md:h-96 md:w-96 z-0"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-ink-border/30 blur-3xl md:h-80 md:w-80 about-blob"
+        className="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-ink-border/30 blur-3xl md:h-80 md:w-80 about-blob z-0"
         aria-hidden
       />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <div className="mb-12 md:mb-16">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent">
+          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent font-body">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink-accent" />
             About Me
           </span>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl">
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl font-heading tracking-tight-heading">
             Who I Am
           </h2>
         </div>
 
-        <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] via-white/[0.02] to-transparent p-8 shadow-[0_0_60px_-28px_rgba(140,168,136,0.35)] backdrop-blur-md md:p-12 lg:p-14">
+        <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] via-white/[0.02] to-transparent p-8 shadow-[0_0_60px_-28px_rgba(140,168,136,0.35)] backdrop-blur-md md:p-12 lg:p-14 pointer-events-auto">
           {/* Soft inner glow line */}
           <div
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ink-accent/50 to-transparent"
             aria-hidden
           />
 
-          <p className="max-w-3xl text-lg leading-relaxed text-ink-muted text-balance md:text-xl md:leading-relaxed">
+          <p className="max-w-3xl text-lg leading-relaxed text-ink-muted text-balance md:text-xl md:leading-relaxed font-body">
             I'm{' '}
             <span className="font-semibold text-ink-text">Dheeraj</span>
             {' '}— a final-year AI &amp; ML student at{' '}
@@ -72,10 +114,10 @@ export default function About() {
                       <Icon className="h-3.5 w-3.5" strokeWidth={2.25} />
                     </span>
                     <span className="min-w-0">
-                      <span className="block text-sm font-semibold text-ink-text transition-colors duration-300 group-hover:text-ink-accent">
+                      <span className="block text-sm font-semibold text-ink-text transition-colors duration-300 group-hover:text-ink-accent font-body">
                         {fact.label}
                       </span>
-                      <span className="block text-[0.7rem] font-medium tracking-wide text-ink-muted/70">
+                      <span className="block text-[0.7rem] font-medium tracking-wide text-ink-muted/70 font-body">
                         {fact.detail}
                       </span>
                     </span>

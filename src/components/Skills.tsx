@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 import {
   Settings2,
@@ -8,11 +9,25 @@ import {
   Atom,
   Wrench,
 } from 'lucide-react';
+import {
+  EASE_PREMIUM,
+  VIEWPORT_ONCE,
+  fadeUp,
+  fadeUpScale,
+  popIn,
+  staggerContainer,
+  transitionBase,
+  staggerSkills,
+} from '@/lib/motion';
 
 type SkillCategory = {
   title: string;
   icon: LucideIcon;
   skills: string[];
+  gridSpan: {
+    sm: string;
+    lg: string;
+  };
   accent: {
     border: string;
     glow: string;
@@ -35,6 +50,7 @@ const CATEGORIES: SkillCategory[] = [
       'GitHub',
       'Docker',
     ],
+    gridSpan: { sm: 'col-span-1', lg: 'col-span-1' },
     accent: {
       border: 'hover:border-[#8ca888]/70',
       glow: 'hover:shadow-[0_0_36px_-12px_rgba(140,168,136,0.45)]',
@@ -58,6 +74,7 @@ const CATEGORIES: SkillCategory[] = [
       'API Integration',
       'JWT Authentication',
     ],
+    gridSpan: { sm: 'col-span-1', lg: 'col-span-2' },
     accent: {
       border: 'hover:border-sky-400/50',
       glow: 'hover:shadow-[0_0_36px_-12px_rgba(56,189,248,0.35)]',
@@ -79,6 +96,7 @@ const CATEGORIES: SkillCategory[] = [
       'NumPy',
       'Pandas',
     ],
+    gridSpan: { sm: 'col-span-1', lg: 'col-span-2' },
     accent: {
       border: 'hover:border-violet-400/50',
       glow: 'hover:shadow-[0_0_36px_-12px_rgba(167,139,250,0.35)]',
@@ -102,6 +120,7 @@ const CATEGORIES: SkillCategory[] = [
       'Vector Databases',
       'API Integration',
     ],
+    gridSpan: { sm: 'col-span-1', lg: 'col-span-2' },
     accent: {
       border: 'hover:border-teal-400/50',
       glow: 'hover:shadow-[0_0_36px_-12px_rgba(45,212,191,0.35)]',
@@ -115,6 +134,7 @@ const CATEGORIES: SkillCategory[] = [
     title: 'Frontend',
     icon: Atom,
     skills: ['React', 'JavaScript', 'HTML', 'CSS', 'Responsive Web Design'],
+    gridSpan: { sm: 'col-span-1', lg: 'col-span-1' },
     accent: {
       border: 'hover:border-cyan-400/50',
       glow: 'hover:shadow-[0_0_36px_-12px_rgba(34,211,238,0.35)]',
@@ -128,6 +148,7 @@ const CATEGORIES: SkillCategory[] = [
     title: 'Tools & Deployment',
     icon: Wrench,
     skills: ['Git', 'GitHub', 'Docker', 'Postman', 'Linux', 'Maven'],
+    gridSpan: { sm: 'col-span-1', lg: 'col-span-1' },
     accent: {
       border: 'hover:border-amber-400/45',
       glow: 'hover:shadow-[0_0_36px_-12px_rgba(251,191,36,0.3)]',
@@ -140,106 +161,157 @@ const CATEGORIES: SkillCategory[] = [
 ];
 
 export default function Skills() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const prefersReduced = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-    if (prefersReduced) {
-      setVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.12 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
-      ref={sectionRef}
       id="skills"
       className="relative overflow-hidden bg-ink-bg px-6 py-24 md:px-10 md:py-32"
     >
-      <div
-        className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-ink-accent/[0.06] blur-3xl"
-        aria-hidden
-      />
+      {/* Background gradient mesh */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[10%] top-[20%] h-[500px] w-[500px] rounded-full bg-ink-accent/[0.08] blur-3xl" />
+        <div className="absolute right-[15%] bottom-[10%] h-[400px] w-[400px] rounded-full bg-ink-accent/[0.05] blur-3xl" />
+        <div className="absolute left-[40%] top-[60%] h-[300px] w-[300px] rounded-full bg-ink-border/[0.08] blur-3xl" />
+      </div>
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="mb-14 md:mb-20">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent">
+        <motion.div
+          className="mb-12 md:mb-16"
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={staggerContainer}
+        >
+          <motion.span
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent font-body"
+            variants={fadeUp}
+            transition={transitionBase}
+          >
             <span className="h-1.5 w-1.5 rounded-full bg-ink-accent" />
             Skills
-          </span>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl">
+          </motion.span>
+          <motion.h2
+            className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl font-heading tracking-tight-heading"
+            variants={fadeUp}
+            transition={transitionBase}
+          >
             What I Work With
-          </h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-muted text-balance">
+          </motion.h2>
+          <motion.p
+            className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-muted text-balance font-body"
+            variants={fadeUp}
+            transition={transitionBase}
+          >
             A toolkit spanning software engineering, backend systems, AI/ML, and
             the glue that ships products.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <motion.div
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6"
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={staggerSkills}
+        >
           {CATEGORIES.map((category, index) => {
             const Icon = category.icon;
             return (
-              <article
-                key={category.title}
-                style={{ transitionDelay: visible ? `${index * 70}ms` : '0ms' }}
-                className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.055] via-white/[0.02] to-transparent p-6 backdrop-blur-sm transition-all duration-500 ease-out md:p-7 ${category.accent.border} ${category.accent.glow} hover:-translate-y-1 ${
-                  visible
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-6 opacity-0'
-                }`}
-              >
-                <div
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-100"
-                  aria-hidden
-                />
-
-                <div className="mb-5 flex items-center gap-3">
-                  <span
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${category.accent.iconBg} ${category.accent.iconText} transition-transform duration-300 group-hover:scale-105`}
-                  >
-                    <Icon className="h-[1.1rem] w-[1.1rem]" strokeWidth={2.1} />
-                  </span>
-                  <h3 className="text-lg font-bold tracking-tight text-ink-text">
-                    {category.title}
-                  </h3>
-                </div>
-
-                <ul className="flex flex-wrap gap-2">
-                  {category.skills.map((skill) => (
-                    <li key={skill}>
-                      <span
-                        className={`inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium tracking-wide text-ink-muted transition-all duration-300 hover:scale-[1.04] ${category.accent.chipHover}`}
-                      >
-                        {skill}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
+              <SkillCard key={category.title} category={category} index={index} />
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
+  );
+}
+
+function SkillCard({ category, index }: { category: SkillCategory; index: number }) {
+  const Icon = category.icon;
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.article
+      variants={fadeUpScale}
+      transition={{ duration: 0.65, ease: EASE_PREMIUM }}
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-ink-accent/[0.08] via-ink-accent/[0.02] to-black p-6 backdrop-blur-sm transition-all duration-500 md:p-7 ${category.gridSpan.sm} ${category.gridSpan.lg} ${category.accent.border} ${category.accent.glow} hover:-translate-y-1`}
+      style={{
+        boxShadow: '0 4px 24px -8px rgba(0, 0, 0, 0.4)',
+      }}
+      whileHover={{
+        boxShadow: '0 8px 32px -8px rgba(140, 168, 136, 0.25)',
+      }}
+    >
+      {/* Soft gradient border glow */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: 'linear-gradient(135deg, rgba(140, 168, 136, 0.1), transparent)',
+        }}
+      />
+      
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-100"
+        aria-hidden
+      />
+
+      <div className="mb-5 flex items-center gap-3">
+        <motion.span
+          className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${category.accent.iconBg} ${category.accent.iconText} transition-transform duration-300 group-hover:scale-105`}
+          animate={
+            reduceMotion
+              ? {}
+              : {
+                  opacity: [1, 0.8, 1],
+                }
+          }
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            repeatType: 'loop',
+            ease: 'easeInOut',
+          }}
+        >
+          <Icon className="h-[1.2rem] w-[1.2rem]" strokeWidth={2.1} />
+        </motion.span>
+        <h3 className="text-lg font-bold tracking-tight text-ink-text font-heading">
+          {category.title}
+        </h3>
+      </div>
+
+      <motion.ul
+        className="flex flex-wrap gap-2"
+        initial={reduceMotion ? false : 'hidden'}
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.03,
+              delayChildren: 0.15,
+            },
+          },
+        }}
+      >
+        {category.skills.map((skill) => (
+          <motion.li
+            key={skill}
+            variants={{
+              hidden: { opacity: 0, scale: 0.9 },
+              visible: { opacity: 1, scale: 1 },
+            }}
+            transition={{ duration: 0.35, ease: EASE_PREMIUM }}
+          >
+            <span
+              className={`inline-flex items-center rounded-full border border-white/[0.06] bg-white/[0.03] px-3 py-1.5 text-xs font-medium tracking-wide text-ink-muted transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.04] ${category.accent.chipHover} font-body`}
+            >
+              {skill}
+            </span>
+          </motion.li>
+        ))}
+      </motion.ul>
+    </motion.article>
   );
 }
