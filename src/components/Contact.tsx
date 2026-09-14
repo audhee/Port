@@ -36,7 +36,7 @@ export default function Contact() {
             Contact
           </span>
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl text-balance">
-            Let's Build Something Useful.
+            Let's Build Something Useful...
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-muted text-balance">
             Have an idea, project, or workflow that could be improved with

@@ -35,7 +35,7 @@ type Achievement = {
 
 const ACHIEVEMENTS: Achievement[] = [
   {
-    title: '1st Place — The Bug Hunt',
+    title: '1st Place — The Bug Hunt(C, Python, Java Debugging)',
     description:
       'Secured 1st place in The Bug Hunt, a competitive debugging challenge involving Python, Java, and C.',
     icon: Trophy,
