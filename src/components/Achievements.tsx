@@ -23,7 +23,7 @@ import {
   staggerFast,
 } from '@/lib/motion';
 
-type AchievementCategory = 'PUBLICATION' | 'PATENT' | 'AWARD' | 'PROGRAM' | 'COMPETITION';
+type AchievementCategory = 'PUBLICATIONS' | 'PATENT' | 'AWARDS' | 'PROGRAM' | 'COMPETITION';
 
 type Achievement = {
   title: string;
