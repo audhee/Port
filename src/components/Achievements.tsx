@@ -77,11 +77,11 @@ const ACHIEVEMENTS: Achievement[] = [
 ];
 
 const CATEGORY_COLORS: Record<AchievementCategory, { glow: string; badge: string; text: string }> = {
-  PUBLICATION: { glow: 'from-blue-400/20 to-emerald-400/20', badge: 'from-blue-500/30 to-emerald-500/30', text: 'text-blue-400' },
-  PATENT: { glow: 'from-amber-400/20 to-orange-400/20', badge: 'from-amber-500/30 to-orange-500/30', text: 'text-amber-400' },
-  AWARD: { glow: 'from-emerald-400/20 to-teal-400/20', badge: 'from-emerald-500/30 to-teal-500/30', text: 'text-emerald-400' },
-  PROGRAM: { glow: 'from-cyan-400/20 to-blue-400/20', badge: 'from-cyan-500/30 to-blue-500/30', text: 'text-cyan-400' },
-  COMPETITION: { glow: 'from-purple-400/20 to-pink-400/20', badge: 'from-purple-500/30 to-pink-500/30', text: 'text-purple-400' },
+  PUBLICATION: { glow: 'from-primary/20 to-primary/20', badge: 'from-primary/30 to-primary/30', text: 'text-primary' },
+  PATENT: { glow: 'from-primary/20 to-primary/20', badge: 'from-primary/30 to-primary/30', text: 'text-primary' },
+  AWARD: { glow: 'from-primary/20 to-primary/20', badge: 'from-primary/30 to-primary/30', text: 'text-primary' },
+  PROGRAM: { glow: 'from-primary/20 to-primary/20', badge: 'from-primary/30 to-primary/30', text: 'text-primary' },
+  COMPETITION: { glow: 'from-primary/20 to-primary/20', badge: 'from-primary/30 to-primary/30', text: 'text-primary' },
 };
 
 type CodingProfile = {
@@ -121,7 +121,7 @@ export default function Achievements() {
   const standard = ACHIEVEMENTS.filter((a) => !a.featured);
 
   return (
-    <section id="achievements" className="relative bg-ink-bg px-6 py-16 md:px-10 md:py-20">
+    <section id="achievements" className="relative bg-bg px-6 py-16 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
         <motion.div
           className="mb-8 md:mb-10"
@@ -131,15 +131,15 @@ export default function Achievements() {
           variants={staggerContainer}
         >
           <motion.span
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent font-body"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
             variants={fadeUp}
             transition={transitionBase}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-ink-accent" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             Achievements
           </motion.span>
           <motion.h2
-            className="mt-4 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl font-heading tracking-tight-heading"
+            className="mt-4 text-3xl font-bold tracking-tight text-text sm:text-4xl md:text-5xl tracking-tight-heading"
             variants={fadeUp}
             transition={transitionBase}
           >
@@ -164,7 +164,7 @@ export default function Achievements() {
 
         <div className="mt-12 md:mt-16">
           <motion.h3
-            className="text-xl font-semibold tracking-tight text-ink-text md:text-2xl font-heading"
+            className="text-xl font-semibold tracking-tight text-text md:text-2xl"
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={VIEWPORT_ONCE}
@@ -205,8 +205,8 @@ function AchievementCard({
       transition={{ duration: 0.65, ease: EASE_PREMIUM }}
       className={`group relative flex flex-col rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 md:p-7 ${
         featured
-          ? 'col-span-1 md:col-span-3 border-ink-border/80 bg-ink-border/[0.12]'
-          : 'col-span-1 md:col-span-2 border-ink-border/60 bg-ink-border/[0.08]'
+          ? 'col-span-1 md:col-span-3 border-white/[0.12] bg-surface-elevated'
+          : 'col-span-1 md:col-span-2 border-white/[0.08] bg-surface'
       }`}
       style={{
         boxShadow: featured
@@ -215,16 +215,16 @@ function AchievementCard({
       }}
       whileHover={{
         boxShadow: featured
-          ? '0 8px 32px -8px rgba(140, 168, 136, 0.15)'
-          : '0 4px 24px -6px rgba(140, 168, 136, 0.1)',
-        borderColor: featured ? 'rgba(140, 168, 136, 0.5)' : 'rgba(140, 168, 136, 0.4)',
+          ? '0 8px 32px -8px rgba(180, 197, 186, 0.15)'
+          : '0 4px 24px -6px rgba(180, 197, 186, 0.1)',
+        borderColor: featured ? 'rgba(180, 197, 186, 0.35)' : 'rgba(180, 197, 186, 0.25)',
       }}
     >
       {featured && (
         <motion.div
           className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500"
           style={{
-            background: `linear-gradient(90deg, transparent, rgba(140, 168, 136, 0.1), transparent)`,
+            background: `linear-gradient(90deg, transparent, rgba(180, 197, 186, 0.1), transparent)`,
             backgroundSize: '200% 100%',
           }}
           animate={{
@@ -257,10 +257,10 @@ function AchievementCard({
         <motion.div
           variants={popIn}
           className={`relative flex h-16 w-16 items-center justify-center rounded-2xl border bg-gradient-to-br ${colors.badge} transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg ${
-            featured ? 'border-ink-border/40' : 'border-ink-border/30'
+            featured ? 'border-white/[0.12]' : 'border-white/[0.08]'
           }`}
           whileHover={{
-            boxShadow: `0 0 24px ${colors.text.replace('text-', '')}40`,
+            boxShadow: '0 0 24px rgba(180, 197, 186, 0.4)',
           }}
         >
           <motion.div
@@ -272,14 +272,14 @@ function AchievementCard({
         </motion.div>
 
         <h3
-          className={`mt-5 font-bold tracking-tight text-ink-text font-heading ${
+          className={`mt-5 font-bold tracking-tight text-text ${
             featured ? 'text-xl md:text-2xl' : 'text-lg md:text-xl'
           }`}
         >
           {achievement.title}
         </h3>
 
-        <p className="mt-2.5 text-sm leading-relaxed text-ink-muted md:text-base font-body">
+        <p className="mt-2.5 text-sm leading-relaxed text-text-secondary md:text-base">
           {achievement.description}
         </p>
       </div>
@@ -305,39 +305,39 @@ function CodingProfileCard({ profile }: { profile: CodingProfile }) {
       rel="noopener noreferrer"
       variants={fadeUpScale}
       transition={{ duration: 0.65, ease: EASE_PREMIUM }}
-      className="group relative flex items-center gap-5 rounded-2xl border border-ink-border/60 bg-ink-border/[0.08] p-6 transition-all duration-300 hover:-translate-y-1 md:p-7"
+      className="group relative flex items-center gap-5 rounded-2xl border border-white/[0.08] bg-surface p-6 transition-all duration-300 hover:-translate-y-1 md:p-7"
       style={{
         boxShadow: '0 2px 16px -6px rgba(0, 0, 0, 0.3)',
       }}
       whileHover={{
-        boxShadow: '0 4px 24px -6px rgba(140, 168, 136, 0.1)',
-        borderColor: 'rgba(140, 168, 136, 0.4)',
-        backgroundColor: 'rgba(78, 96, 70, 0.12)',
+        boxShadow: '0 4px 24px -6px rgba(180, 197, 186, 0.1)',
+        borderColor: 'rgba(180, 197, 186, 0.35)',
+        backgroundColor: 'rgba(180, 197, 186, 0.12)',
       }}
     >
       <motion.div
         variants={popIn}
-        className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-ink-border/40 bg-gradient-to-br from-ink-accent/20 to-ink-accent/10 transition-all duration-300 group-hover:scale-110 group-hover:border-ink-accent/60"
+        className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/[0.08] bg-gradient-to-br from-primary/20 to-primary/10 transition-all duration-300 group-hover:scale-110 group-hover:border-primary/30"
         whileHover={{
-          boxShadow: '0 0 24px rgba(140, 168, 136, 0.3)',
+          boxShadow: '0 0 24px rgba(180, 197, 186, 0.3)',
         }}
       >
-        <Icon className="h-7 w-7 text-ink-accent transition-colors duration-300" />
+        <Icon className="h-7 w-7 text-primary transition-colors duration-300" />
       </motion.div>
 
       <div className="flex-1">
         <div className="flex items-center gap-2">
-          <h4 className="text-lg font-bold tracking-tight text-ink-text">
+          <h4 className="text-lg font-bold tracking-tight text-text">
             {profile.platform}
           </h4>
-          <ExternalLink className="h-4 w-4 text-ink-muted transition-colors duration-300 group-hover:text-ink-accent" />
+          <ExternalLink className="h-4 w-4 text-text-muted transition-colors duration-300 group-hover:text-primary" />
         </div>
-        <p className="mt-1 text-base font-semibold text-ink-accent tabular-nums">
+        <p className="mt-1 text-base font-semibold text-primary tabular-nums">
           {profile.prefix}
           {count}
           {profile.suffix}
         </p>
-        <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+        <p className="mt-1.5 text-sm leading-relaxed text-text-muted">
           {profile.description}
         </p>
       </div>

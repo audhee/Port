@@ -1,20 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --text: #E5EBE7;
+  --background: #0E120F;
+  --primary: #B4C5BA;
+  --secondary: #48565E;
+  --accent: #748095;
+}
+
 html {
   scroll-behavior: smooth;
+  /* Prevent horizontal overflow without breaking the scroll container */
+  overflow-x: hidden;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #070705;
-  color: #ecede6;
+  background-color: var(--background);
+  color: var(--text);
+  /* DO NOT set overflow-x: hidden on body — combined with html it creates
+     a new scroll container in Safari/iOS that breaks document scrolling */
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -22,6 +33,7 @@ body {
     cursor: none !important;
   }
 }
+
 
 @layer utilities {
   .text-balance {
@@ -70,7 +82,7 @@ body {
   font-size: clamp(2.8rem, 9vw, 7.5rem);
   font-weight: 700;
   letter-spacing: 0.22em;
-  color: #ecede6;
+  color: var(--text);
   text-align: center;
   line-height: 1;
   /* Subtle initial animation in */
@@ -132,11 +144,11 @@ body {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(195, 199, 179, 0.55); /* ink-muted at 55% */
+  color: rgba(116, 128, 149, 0.55); /* accent at 55% */
 }
 
 .intro-hint__arrow {
-  color: rgba(140, 168, 136, 0.65); /* ink-accent at 65% */
+  color: rgba(180, 197, 186, 0.65); /* primary at 65% */
   animation: introArrowBounce 1.6s ease-in-out infinite;
 }
 
@@ -152,19 +164,28 @@ body {
   0%, 100% {
     transform: translate3d(0, 0, 0) scale(1);
     opacity: 0.85;
-    border-color: rgba(78, 96, 70, 0.65);
-    box-shadow: 0 0 8px rgba(140, 168, 136, 0.10);
+    border-color: rgba(72, 86, 94, 0.65);
+    box-shadow: 0 0 8px rgba(180, 197, 186, 0.10);
   }
   50% {
     transform: translate3d(0, -1.5px, 0) scale(1.018);
     opacity: 1;
-    border-color: rgba(140, 168, 136, 0.75);
-    box-shadow: 0 0 16px rgba(140, 168, 136, 0.32);
+    border-color: rgba(180, 197, 186, 0.75);
+    box-shadow: 0 0 16px rgba(180, 197, 186, 0.32);
   }
 }
 
 .tech-badge-idle {
   animation: techBadgeIdle 3.6s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-badge-idle {
+    animation: none !important;
+  }
 }
 
 @keyframes circuitSignalMove {
@@ -178,6 +199,13 @@ body {
 
 .circuit-signal-line {
   animation: circuitSignalMove 3.2s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circuit-signal-line {
+    animation: none !important;
+  }
 }
 
 /* ─────────────────────────────────────────────
@@ -204,11 +232,11 @@ body {
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(232, 232, 227, 0.55);
+  color: rgba(180, 197, 186, 0.55);
 }
 
 .tech-marquee__label-dot {
-  color: rgba(168, 196, 162, 0.7);
+  color: rgba(180, 197, 186, 0.7);
 }
 
 .tech-marquee__viewport {
@@ -240,6 +268,10 @@ body {
   display: flex;
   width: max-content;
   will-change: transform;
+  /* Force GPU compositing layer — eliminates paint during scroll */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .tech-marquee__group {
@@ -256,13 +288,13 @@ body {
   height: 2.5rem;
   padding: 0 1.75rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(72, 86, 94, 0.3);
+  background: rgba(72, 86, 94, 0.08);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(232, 232, 227, 0.7);
+  color: rgba(180, 197, 186, 0.7);
   white-space: nowrap;
   line-height: 1;
 }
@@ -271,7 +303,7 @@ body {
   flex-shrink: 0;
   font-size: 0.85rem;
   line-height: 1;
-  color: rgba(168, 196, 162, 0.5);
+  color: rgba(180, 197, 186, 0.5);
   user-select: none;
 }
 
@@ -347,6 +379,9 @@ body {
 
 .about-blob {
   animation: aboutBlobDrift 12s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -387,7 +422,7 @@ body {
   font-size: 1.45rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #e8e8e3;
+  color: var(--text);
   text-shadow: 0 0 0 transparent;
   transition:
     color 0.3s ease,
@@ -402,16 +437,16 @@ body {
   bottom: -3px;
   height: 1px;
   width: 100%;
-  background: #a8c4a2;
+  background: var(--primary);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s ease;
 }
 
 .nav-logo:hover {
-  color: #a8c4a2;
+  color: var(--primary);
   letter-spacing: 0.06em;
-  text-shadow: 0 0 18px rgba(168, 196, 162, 0.45);
+  text-shadow: 0 0 18px rgba(180, 197, 186, 0.45);
 }
 
 .nav-logo:hover::after {
@@ -425,7 +460,7 @@ body {
   padding: 0.65rem 1.15rem;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #e8e8e3;
+  color: var(--text);
   transition: color 0.3s ease;
 }
 
@@ -436,7 +471,7 @@ body {
   bottom: 2px;
   width: calc(100% - 2rem);
   height: 1px;
-  background: #a8c4a2;
+  background: var(--primary);
   transform: translateX(-50%) scaleX(0);
   transform-origin: center;
   transition: transform 0.3s ease;
@@ -450,8 +485,8 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 999px;
-  background: #a8c4a2;
-  box-shadow: 0 0 8px rgba(168, 196, 162, 0.7);
+  background: var(--primary);
+  box-shadow: 0 0 8px rgba(180, 197, 186, 0.7);
   opacity: 0;
   transform: translateX(-50%) scale(0);
   transition:
@@ -460,7 +495,7 @@ body {
 }
 
 .nav-link:hover {
-  color: #a8c4a2;
+  color: var(--primary);
 }
 
 .nav-link:hover::after,
@@ -469,7 +504,7 @@ body {
 }
 
 .nav-link--active {
-  color: #a8c4a2;
+  color: var(--primary);
 }
 
 .nav-link--active::before {
@@ -483,11 +518,11 @@ body {
   justify-content: center;
   gap: 0.4rem;
   border-radius: 999px;
-  background: #8ca888;
+  background: var(--primary);
   padding: 0.8rem 1.5rem;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #070705;
+  color: var(--background);
   box-shadow: 0 0 0 transparent;
   transform: scale(1);
   transition:
@@ -498,8 +533,8 @@ body {
 
 .nav-cta:hover {
   transform: scale(1.05);
-  background: #a8c4a2;
-  box-shadow: 0 0 20px rgba(168, 196, 162, 0.4);
+  background: #C5D4CB;
+  box-shadow: 0 0 20px rgba(180, 197, 186, 0.4);
 }
 
 .nav-cta__icon {
@@ -639,7 +674,7 @@ body {
 
 .nav-overlay__link:hover,
 .nav-overlay__link--active {
-  color: #a8c4a2;
+  color: var(--primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -665,6 +700,55 @@ body {
   }
 }
 
+/* content-visibility: auto removed — it interferes with Framer Motion
+   useScroll position tracking and causes scroll calculation errors.
+   The Three.js IntersectionObserver pause already handles the biggest
+   performance win for off-screen content. */
 
+/* ─────────────────────────────────────────────
+   Intro overlay — GPU layer promotion
+───────────────────────────────────────────── */
+.intro-overlay {
+  will-change: opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
 
+.intro-name {
+  will-change: opacity, transform;
+}
 
+.intro-hint {
+  will-change: opacity, transform;
+}
+
+/* ─────────────────────────────────────────────
+   Navbar glass effect — isolate compositor layer
+───────────────────────────────────────────── */
+.nav-bar--glass {
+  transform: translateZ(0);
+}
+
+/* ─────────────────────────────────────────────
+   Mobile: slow down / simplify heavy animations
+───────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .about-blob {
+    animation-duration: 18s;
+  }
+
+  .tech-badge-idle {
+    animation-duration: 5s;
+  }
+
+  /* Disable the circuit signal on mobile — pure visual fluff */
+  .circuit-signal-line {
+    animation: none !important;
+  }
+
+  /* Disable scroll-driven blur on mobile (framer-motion handles it) */
+  html {
+    /* Ensure subpixel rendering is off on mobile for speed */
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+}

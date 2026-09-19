@@ -82,18 +82,18 @@ export default function TechBadge({ name, index }: TechBadgeProps) {
         opacity: isInitialized ? 1 : 0,
         animationDelay: idleDelaySec,
       }}
-      className={`group relative inline-flex items-center rounded-full border border-ink-border/60 bg-ink-border/[0.08] px-4 py-1.5 text-sm font-medium text-ink-muted overflow-hidden select-none cursor-default transition-all duration-300 ease-out ${
+      className={`group relative inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 text-sm font-medium text-text-muted overflow-hidden select-none cursor-default transition-all duration-300 ease-out ${
         isInitialized ? 'tech-badge-idle' : ''
-      } hover:scale-[1.05] hover:-translate-y-[3px] hover:border-ink-accent hover:bg-ink-accent/15 hover:text-white hover:shadow-[0_0_22px_rgba(140,168,136,0.38)]`}
+      } hover:scale-[1.05] hover:-translate-y-[3px] hover:border-primary hover:bg-primary/10 hover:text-white hover:shadow-[0_0_22px_rgba(180,197,186,0.38)]`}
     >
       {/* ── Traveling Circuit Signal Highlight Line (Continuous) ── */}
       <span
         style={{ animationDelay: circuitDelaySec }}
-        className="circuit-signal-line pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-ink-accent/40 to-transparent opacity-60"
+        className="circuit-signal-line pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-60"
       />
 
       {/* ── Ambient Radial Glow Aura on Hover ── */}
-      <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(140,168,136,0.35)_0%,transparent_70%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10" />
+      <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(180,197,186,0.35)_0%,transparent_70%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10" />
 
       {/* ── Left-to-Right Hover Shimmer Sweep ── */}
       <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full transition-transform duration-700 ease-out group-hover:translate-x-full" />

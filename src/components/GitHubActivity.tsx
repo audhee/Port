@@ -20,13 +20,13 @@ const USERNAME = 'audhee';
 const API_URL = `https://github-contributions-api.jogruber.de/v4/${USERNAME}`;
 const GITHUB_URL = `https://github.com/${USERNAME}`;
 
-/** Inline-style colours per level (0–4) matching ink-border / ink-accent palette */
+/** Inline-style colours per level (0–4) matching new palette */
 const LEVEL_COLORS: Record<number, string> = {
-  0: 'rgba(78,96,70,0.12)',    // ink-border very faint — empty
-  1: 'rgba(78,96,70,0.45)',    // ink-border dim
-  2: 'rgba(140,168,136,0.45)', // ink-accent dim
-  3: 'rgba(140,168,136,0.72)', // ink-accent medium
-  4: 'rgba(140,168,136,1)',    // ink-accent full
+  0: 'rgba(255, 255, 255, 0.06)',
+  1: 'rgba(255, 255, 255, 0.15)',
+  2: 'rgba(180, 197, 186, 0.45)',
+  3: 'rgba(180, 197, 186, 0.72)',
+  4: 'rgba(180, 197, 186, 1)',
 };
 
 const MONTH_LABELS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -114,46 +114,46 @@ export default function GitHubActivity() {
   return (
     <section
       id="github-activity"
-      className="relative bg-ink-bg px-6 py-24 md:px-10 md:py-32"
+      className="relative bg-bg px-6 py-24 md:px-10 md:py-32"
     >
       <div className="mx-auto max-w-6xl">
         {/* Section header */}
         <div className="mb-14 md:mb-20">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent">
-            <span className="h-1.5 w-1.5 rounded-full bg-ink-accent" />
+          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             Personal GitHub Activity
           </span>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight text-ink-text sm:text-4xl md:text-5xl">
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-text sm:text-4xl md:text-5xl">
             Coding Consistency
           </h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-muted text-balance">
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-text-secondary text-balance">
             A year-long view of my open-source contributions and coding activity on GitHub.
           </p>
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl border border-ink-border/60 bg-ink-border/[0.07] p-6 md:p-8">
+        <div className="rounded-2xl border border-white/[0.08] bg-surface p-6 md:p-8">
 
           {/* Loading */}
           {loading && (
             <div className="flex flex-col items-center justify-center gap-4 py-20">
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-ink-border border-t-ink-accent" />
-              <p className="text-sm text-ink-muted">Loading GitHub activity&hellip;</p>
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/[0.08] border-t-primary" />
+              <p className="text-sm text-text-muted">Loading GitHub activity&hellip;</p>
             </div>
           )}
 
           {/* Error fallback */}
           {!loading && error && (
             <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
-              <Github className="h-10 w-10 text-ink-muted/50" />
-              <p className="text-base font-semibold text-ink-muted">
+              <Github className="h-10 w-10 text-text-muted/50" />
+              <p className="text-base font-semibold text-text-muted">
                 Couldn&apos;t load GitHub activity
               </p>
               <a
                 href={GITHUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-accent transition-colors duration-200 hover:text-ink-text"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors duration-200 hover:text-text"
               >
                 View on GitHub
                 <ArrowUpRight className="h-4 w-4" />
@@ -167,10 +167,10 @@ export default function GitHubActivity() {
               {/* Top row: count + year pills */}
               <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <span className="text-2xl font-extrabold tracking-tight text-ink-text">
+                  <span className="text-2xl font-extrabold tracking-tight text-text">
                     {totalForYear.toLocaleString()}
                   </span>
-                  <span className="ml-2 text-sm text-ink-muted">
+                  <span className="ml-2 text-sm text-text-muted">
                     contributions in {selectedYear}
                   </span>
                 </div>
@@ -183,8 +183,8 @@ export default function GitHubActivity() {
                       onClick={() => setSelectedYear(yr)}
                       className={`rounded-full border px-4 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 ${
                         selectedYear === yr
-                          ? 'border-ink-accent bg-ink-accent/15 text-ink-accent'
-                          : 'border-ink-border/50 bg-transparent text-ink-muted hover:border-ink-accent/50 hover:text-ink-text'
+                          ? 'border-primary bg-primary/10 text-primary'
+                          : 'border-white/[0.08] bg-transparent text-text-muted hover:border-primary/30 hover:text-text'
                       }`}
                     >
                       {yr}
@@ -204,7 +204,7 @@ export default function GitHubActivity() {
                     {monthPositions.map(({ label, col }) => (
                       <span
                         key={`${label}-${col}`}
-                        className="absolute text-[0.62rem] font-medium uppercase tracking-wider text-ink-muted/70"
+                        className="absolute text-[0.62rem] font-medium uppercase tracking-wider text-text-muted/70"
                         style={{ left: `calc(30px + ${col} * 13px)` }}
                       >
                         {label}
@@ -220,7 +220,7 @@ export default function GitHubActivity() {
                       {WEEKDAY_LABELS.map((label, i) => (
                         <div key={i} className="flex h-[11px] items-center">
                           {label && (
-                            <span className="text-[0.58rem] font-medium uppercase tracking-wider text-ink-muted/60">
+                            <span className="text-[0.58rem] font-medium uppercase tracking-wider text-text-muted/60">
                               {label}
                             </span>
                           )}
@@ -240,7 +240,7 @@ export default function GitHubActivity() {
                                 className="relative h-[11px] w-[11px] cursor-default rounded-[2px] transition-transform duration-150 hover:z-10 hover:scale-125"
                                 style={{
                                   backgroundColor: LEVEL_COLORS[day.level],
-                                  outline: day.level > 0 ? '1px solid rgba(140,168,136,0.12)' : 'none',
+                                  outline: day.level > 0 ? '1px solid rgba(180, 197, 186, 0.25)' : 'none',
                                 }}
                               />
                             ) : (
@@ -254,7 +254,7 @@ export default function GitHubActivity() {
 
                   {/* Legend */}
                   <div className="mt-4 flex items-center justify-end gap-1.5">
-                    <span className="text-[0.62rem] font-medium uppercase tracking-wider text-ink-muted/60">Less</span>
+                    <span className="text-[0.62rem] font-medium uppercase tracking-wider text-text-muted/60">Less</span>
                     {([0, 1, 2, 3, 4] as const).map((lvl) => (
                       <div
                         key={lvl}
@@ -262,7 +262,7 @@ export default function GitHubActivity() {
                         style={{ backgroundColor: LEVEL_COLORS[lvl] }}
                       />
                     ))}
-                    <span className="text-[0.62rem] font-medium uppercase tracking-wider text-ink-muted/60">More</span>
+                    <span className="text-[0.62rem] font-medium uppercase tracking-wider text-text-muted/60">More</span>
                   </div>
                 </div>
               </div>
@@ -273,7 +273,7 @@ export default function GitHubActivity() {
                   href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-muted transition-colors duration-200 hover:text-ink-accent"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-muted transition-colors duration-200 hover:text-accent"
                 >
                   <Github className="h-4 w-4" />
                   View on GitHub

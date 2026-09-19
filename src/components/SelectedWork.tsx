@@ -101,45 +101,44 @@ export default function SelectedWork() {
     <section
       id="work"
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#0d100d] text-ink-text"
+      className="relative overflow-hidden bg-[#0d100d] text-text"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(168,196,162,0.14),transparent_34%),linear-gradient(180deg,#070705_0%,#0d100d_34%,#101511_100%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(236,237,230,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(236,237,230,0.8)_1px,transparent_1px)] [background-size:88px_88px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(180,197,186,0.14),transparent_34%),linear-gradient(180deg,#0E120F_0%,#0d100d_34%,#111612_100%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(229,235,231,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(229,235,231,0.8)_1px,transparent_1px)] [background-size:88px_88px]" />
 
       <div className="relative h-[112vh] sm:h-[118vh] md:h-[124vh]">
         <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden px-6">
           <motion.div
-            className="absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(168,196,162,0.22),rgba(140,168,136,0.08)_42%,transparent_70%)] blur-3xl"
+            className="absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(180,197,186,0.22),rgba(180,197,186,0.08)_42%,transparent_70%)] blur-3xl"
             style={reduceMotion ? undefined : { opacity: glowOpacity }}
           />
           <motion.div
             className="relative z-10 text-center"
             style={reduceMotion ? undefined : { opacity: titleOpacity, scale: titleScale, y: titleY }}
           >
-            <span className="mx-auto mb-5 flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent font-body">
-              <span className="h-1.5 w-1.5 rounded-full bg-ink-accent shadow-[0_0_18px_rgba(168,196,162,0.85)]" />
+            <span className="mx-auto mb-5 flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_18px_rgba(180,197,186,0.85)]" />
               New Chapter
             </span>
-            <h2 className="text-5xl font-bold tracking-normal text-ink-text sm:text-6xl md:text-8xl font-heading tracking-tight-heading">
+            <h2 className="text-5xl font-bold tracking-normal text-text sm:text-6xl md:text-8xl tracking-tight-heading">
               Selected Work
             </h2>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg font-body">
-              Four builds, each treated like its own orbit: AI systems, product logic,
-              practical interfaces, and code that moves beyond static portfolio cards.
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-text-secondary sm:text-lg">
+              Some of my works are like :)
             </p>
           </motion.div>
 
           <div
-            className="absolute bottom-10 left-1/2 z-10 h-px w-28 -translate-x-1/2 overflow-hidden rounded-full bg-ink-border/35 sm:bottom-12 sm:w-36"
+            className="absolute bottom-10 left-1/2 z-10 h-px w-28 -translate-x-1/2 overflow-hidden rounded-full bg-white/[0.08] sm:bottom-12 sm:w-36"
             aria-hidden="true"
           >
             <motion.div
-              className="h-full origin-left bg-ink-accent shadow-[0_0_18px_rgba(168,196,162,0.8)]"
+              className="h-full origin-left bg-primary shadow-[0_0_18px_rgba(180,197,186,0.8)]"
               style={reduceMotion ? undefined : { scaleX: progressScaleX }}
             />
           </div>
           <motion.span
-            className="absolute bottom-9 left-1/2 z-10 h-2 w-2 -translate-x-1/2 rounded-full bg-ink-accent shadow-[0_0_18px_rgba(168,196,162,0.9)] sm:bottom-11"
+            className="absolute bottom-9 left-1/2 z-10 h-2 w-2 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_18px_rgba(180,197,186,0.9)] sm:bottom-11"
             style={reduceMotion ? undefined : { opacity: titleOpacity }}
             aria-hidden="true"
           />
@@ -201,7 +200,7 @@ function ProjectStory({
       style={reduceMotion || !isDesktop ? undefined : { opacity: textOpacity, x: textX }}
     >
       <div
-        className="pointer-events-none absolute -top-16 right-0 text-[8rem] font-bold leading-none text-ink-text/[0.045] sm:text-[11rem] md:-right-8 md:text-[14rem]"
+        className="pointer-events-none absolute -top-16 right-0 text-[8rem] font-bold leading-none text-text/[0.045] sm:text-[11rem] md:-right-8 md:text-[14rem]"
         aria-hidden="true"
       >
         {String(index + 1).padStart(2, '0')}
@@ -214,29 +213,29 @@ function ProjectStory({
         variants={staggerContainer}
       >
         <motion.span
-          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-accent font-body"
+          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
           variants={fadeUp}
           transition={transitionBase}
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-ink-accent" />
+          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
           {project.subtitle}
         </motion.span>
         <motion.h3
-          className="mt-5 text-3xl font-bold leading-tight tracking-normal text-ink-text sm:text-4xl md:text-5xl font-heading tracking-tight-heading"
+          className="mt-5 text-3xl font-bold leading-tight tracking-normal text-text sm:text-4xl md:text-5xl tracking-tight-heading"
           variants={fadeUp}
           transition={transitionBase}
         >
           {project.title}
         </motion.h3>
         <motion.p
-          className="mt-5 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg font-body"
+          className="mt-5 max-w-xl text-base leading-relaxed text-text-secondary sm:text-lg"
           variants={fadeUp}
           transition={transitionBase}
         >
           {project.description}
         </motion.p>
         <motion.p
-          className="mt-4 max-w-xl border-l border-ink-accent/35 pl-5 text-sm leading-relaxed text-ink-muted/80 sm:text-base font-body"
+          className="mt-4 max-w-xl border-l border-primary/35 pl-5 text-sm leading-relaxed text-text-muted/80 sm:text-base"
           variants={fadeUp}
           transition={transitionBase}
         >
@@ -248,7 +247,7 @@ function ProjectStory({
             <motion.span
               key={tech}
               variants={chipItem}
-              className="rounded-full border border-ink-accent/25 bg-ink-accent/[0.06] px-3.5 py-1.5 text-xs font-semibold text-ink-text shadow-[0_0_18px_rgba(140,168,136,0.10)] font-body"
+              className="rounded-full border border-primary/25 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold text-text shadow-[0_0_18px_rgba(180,197,186,0.10)]"
             >
               {tech}
             </motion.span>
@@ -305,8 +304,8 @@ function ProjectLink({
       rel="noopener noreferrer"
       className={
         primary
-          ? 'group inline-flex items-center justify-center gap-2 rounded-full border border-ink-accent/70 bg-ink-accent px-5 py-3 text-sm font-bold text-ink-bg shadow-[0_0_28px_rgba(140,168,136,0.16)] transition-all duration-300 hover:border-ink-accent hover:bg-[#a8c4a2] hover:shadow-[0_0_34px_rgba(168,196,162,0.34)] font-body'
-          : 'group inline-flex items-center justify-center gap-2 rounded-full border border-ink-border/70 bg-[#101511]/80 px-5 py-3 text-sm font-bold text-ink-text transition-all duration-300 hover:border-ink-accent/80 hover:text-ink-accent hover:shadow-[0_0_26px_rgba(140,168,136,0.16)] font-body'
+          ? 'group inline-flex items-center justify-center gap-2 rounded-full border border-primary/70 bg-primary px-5 py-3 text-sm font-bold text-bg shadow-[0_0_28px_rgba(180,197,186,0.16)] transition-all duration-300 hover:border-primary hover:bg-[#C5D4CB] hover:shadow-[0_0_34px_rgba(180,197,186,0.34)]'
+          : 'group inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.08] bg-surface/80 px-5 py-3 text-sm font-bold text-text transition-all duration-300 hover:border-primary/80 hover:text-primary hover:shadow-[0_0_26px_rgba(180,197,186,0.16)]'
       }
     >
       {icon === 'github' ? <Github className="h-4 w-4" /> : null}
@@ -350,7 +349,7 @@ function ProjectVisual({ project, index }: { project: Project; index: number }) 
         }}
       />
       <motion.div
-        className="relative h-full overflow-hidden rounded-[1.75rem] border border-ink-accent/25 bg-[#0b0f0c] shadow-[0_32px_90px_rgba(0,0,0,0.44)] [transform-style:preserve-3d]"
+        className="relative h-full overflow-hidden rounded-[1.75rem] border border-primary/25 bg-[#0b0f0c] shadow-[0_32px_90px_rgba(0,0,0,0.44)] [transform-style:preserve-3d]"
         style={reduceMotion ? undefined : { rotateX: springX, rotateY: springY }}
       >
         <div
@@ -362,7 +361,7 @@ function ProjectVisual({ project, index }: { project: Project; index: number }) 
         <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(236,237,230,0.85)_1px,transparent_1px),linear-gradient(90deg,rgba(236,237,230,0.85)_1px,transparent_1px)] [background-size:42px_42px]" />
 
         <div className="relative flex h-full flex-col p-5 sm:p-6" style={{ transform: 'translateZ(34px)' }}>
-          <div className="flex items-center justify-between border-b border-ink-accent/15 pb-4">
+          <div className="flex items-center justify-between border-b border-primary/15 pb-4">
             <div className="flex items-center gap-2">
               {[0, 1, 2].map((dot) => (
                 <span
@@ -372,16 +371,16 @@ function ProjectVisual({ project, index }: { project: Project; index: number }) 
                 />
               ))}
             </div>
-            <span className="rounded-full border border-ink-accent/20 bg-ink-accent/[0.06] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink-muted">
+            <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-text-muted">
               {project.signal}
             </span>
           </div>
 
           <div className="grid flex-1 grid-cols-1 gap-4 pt-5 sm:grid-cols-[1fr_0.78fr]">
-            <div className="relative overflow-hidden rounded-2xl border border-ink-accent/15 bg-black/20 p-4">
-              <div className="absolute left-5 top-5 h-24 w-24 rounded-full border border-ink-accent/25" />
-              <div className="absolute left-16 top-20 h-36 w-36 rounded-full border border-ink-accent/10" />
-              <div className="absolute bottom-8 right-8 h-28 w-28 rounded-full border border-ink-accent/20" />
+            <div className="relative overflow-hidden rounded-2xl border border-primary/15 bg-black/20 p-4">
+              <div className="absolute left-5 top-5 h-24 w-24 rounded-full border border-primary/25" />
+              <div className="absolute left-16 top-20 h-36 w-36 rounded-full border border-primary/10" />
+              <div className="absolute bottom-8 right-8 h-28 w-28 rounded-full border border-primary/20" />
               <div className="relative h-full">
                 {Array.from({ length: 8 }).map((_, item) => (
                   <span
@@ -400,9 +399,9 @@ function ProjectVisual({ project, index }: { project: Project; index: number }) 
                   <line x1="30%" y1="72%" x2="58%" y2="42%" stroke={project.accent} strokeOpacity="0.2" />
                   <line x1="22%" y1="52%" x2="74%" y2="26%" stroke={project.accent} strokeOpacity="0.12" />
                 </svg>
-                <div className="absolute bottom-0 left-0 right-0 rounded-2xl border border-ink-accent/15 bg-[#101511]/88 p-4 backdrop-blur-md">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-accent">System Focus</p>
-                  <p className="mt-2 text-lg font-bold leading-tight text-ink-text">{project.title}</p>
+                <div className="absolute bottom-0 left-0 right-0 rounded-2xl border border-primary/15 bg-[#101511]/88 p-4 backdrop-blur-md">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">System Focus</p>
+                  <p className="mt-2 text-lg font-bold leading-tight text-text">{project.title}</p>
                 </div>
               </div>
             </div>
@@ -411,9 +410,9 @@ function ProjectVisual({ project, index }: { project: Project; index: number }) 
               {project.metrics.map((metric, metricIndex) => (
                 <div
                   key={metric}
-                  className="rounded-2xl border border-ink-accent/15 bg-ink-accent/[0.055] p-3"
+                  className="rounded-2xl border border-primary/15 bg-primary/10 p-3"
                 >
-                  <div className="mb-3 flex items-center justify-between text-[0.65rem] font-bold uppercase tracking-[0.14em] text-ink-muted/70">
+                  <div className="mb-3 flex items-center justify-between text-[0.65rem] font-bold uppercase tracking-[0.14em] text-text-muted/70">
                     <span>{metric}</span>
                     <span>{String(metricIndex + 1).padStart(2, '0')}</span>
                   </div>
@@ -428,10 +427,10 @@ function ProjectVisual({ project, index }: { project: Project; index: number }) 
                   </div>
                 </div>
               ))}
-              <div className="mt-auto rounded-2xl border border-ink-accent/15 bg-black/20 p-4">
+              <div className="mt-auto rounded-2xl border border-primary/15 bg-black/20 p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-ink-muted/70">Open Repo</span>
-                  <ArrowUpRight className="h-4 w-4 text-ink-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-text-muted/70">Open Repo</span>
+                  <ArrowUpRight className="h-4 w-4 text-primary transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </div>
                 <div className="mt-4 grid grid-cols-5 gap-1.5">
                   {Array.from({ length: 15 }).map((_, cell) => (

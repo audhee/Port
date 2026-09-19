@@ -7,6 +7,9 @@ export default function IntroOverlay() {
   const hasTriggered = useRef(false);
 
   useEffect(() => {
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
     // Lock body scroll while intro is active
     document.body.style.overflow = 'hidden';
 
@@ -19,6 +22,9 @@ export default function IntroOverlay() {
       setTimeout(() => {
         setPhase('done');
         document.body.style.overflow = '';
+        if (!window.location.hash) {
+          window.scrollTo(0, 0);
+        }
       }, 950);
     };
 

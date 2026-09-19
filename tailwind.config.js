@@ -4,20 +4,20 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['Space Grotesk', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        sans: ['Space Grotesk', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
       },
       colors: {
-        ink: {
-          bg: '#070705',
-          text: '#ecede6',
-          muted: '#c3c7b3',
-          border: '#4e6046',
-          accent: '#8ca888',
-        },
-      },
-      grayscale: {
-        40: '40%',
+        bg: '#0E120F',
+        'bg-secondary': '#111612',
+        surface: '#111612',
+        'surface-elevated': '#1A211D',
+        text: '#E5EBE7',
+        'text-secondary': '#B4C5BA',
+        'text-muted': '#748095',
+        primary: '#B4C5BA',
+        secondary: '#48565E',
+        accent: '#748095',
+        border: 'rgba(72, 86, 94, 0.3)',
       },
       letterSpacing: {
         'tight-heading': '-0.025em',

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
 export default function CustomCursor() {
@@ -9,10 +9,11 @@ export default function CustomCursor() {
   const [isMouseDown, setIsMouseDown] = useState(false);
 
   // Position refs for frame loop without React state re-renders on every pixel move
-  const mouseRef = useRef({ x: -100, y: -100 });
-  const ringRef = useRef({ x: -100, y: -100 });
-  
-  const dotElRef = useRef<HTMLDivElement>(null);
+  const mouseRef   = useRef({ x: -100, y: -100 });
+  const ringRef    = useRef({ x: -100, y: -100 });
+  const isVisRef   = useRef(false); // mirror of isVisible as a ref to avoid effect re-runs
+
+  const dotElRef  = useRef<HTMLDivElement>(null);
   const ringElRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,72 +23,102 @@ export default function CustomCursor() {
 
     setEnabled(true);
 
+    let lastHovered = false;
+    let lastCardHovered = false;
+    let lastTarget: EventTarget | null = null;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
 
-      if (!isVisible) setIsVisible(true);
+      if (!isVisRef.current) {
+        isVisRef.current = true;
+        setIsVisible(true);
+      }
 
-      // Detect hover over interactive elements
-      const target = e.target as HTMLElement | null;
-      if (target) {
-        const isClickable = !!target.closest(
-          'a, button, input, textarea, select, [role="button"], label, .group'
-        );
-        const isCard = !!target.closest('article, [data-cursor="card"]');
+      // Check hover only if target element changed
+      if (e.target !== lastTarget) {
+        lastTarget = e.target;
+        const target = e.target as HTMLElement | null;
+        if (target) {
+          const isClickable = !!target.closest(
+            'a, button, input, textarea, select, [role="button"], label, .group'
+          );
+          const isCard = !!target.closest('article, [data-cursor="card"]');
 
-        setIsHovered(isClickable);
-        setIsCardHovered(isCard);
+          if (isClickable !== lastHovered) {
+            lastHovered = isClickable;
+            setIsHovered(isClickable);
+          }
+          if (isCard !== lastCardHovered) {
+            lastCardHovered = isCard;
+            setIsCardHovered(isCard);
+          }
+        }
       }
     };
 
-    const handleMouseDown = () => setIsMouseDown(true);
-    const handleMouseUp = () => setIsMouseDown(false);
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseDown  = () => setIsMouseDown(true);
+    const handleMouseUp    = () => setIsMouseDown(false);
+    const handleMouseLeave = () => { isVisRef.current = false; setIsVisible(false); };
+    const handleMouseEnter = () => { isVisRef.current = true;  setIsVisible(true); };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousemove',  handleMouseMove,  { passive: true });
+    window.addEventListener('mousedown',  handleMouseDown);
+    window.addEventListener('mouseup',    handleMouseUp);
     document.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('mouseenter', handleMouseEnter);
 
     // ── Animation Loop for Smooth Spring Trailing ──────────────────────────
     let animFrameId: number;
+    let lastDotX = -999;
+    let lastDotY = -999;
+    let lastRingX = -999;
+    let lastRingY = -999;
 
     const render = () => {
       animFrameId = requestAnimationFrame(render);
 
-      // Lag/Spring interpolation for outer ring (0.16 factor for silky lag)
-      ringRef.current.x += (mouseRef.current.x - ringRef.current.x) * 0.16;
-      ringRef.current.y += (mouseRef.current.y - ringRef.current.y) * 0.16;
+      const dx = mouseRef.current.x - ringRef.current.x;
+      const dy = mouseRef.current.y - ringRef.current.y;
 
-      // Update dot transform directly
-      if (dotElRef.current) {
-        const x = mouseRef.current.x;
-        const y = mouseRef.current.y;
-        dotElRef.current.style.transform = `translate3d(${x - 4}px, ${y - 4}px, 0)`;
+      ringRef.current.x += dx * 0.16;
+      ringRef.current.y += dy * 0.16;
+
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+
+      if (mx !== lastDotX || my !== lastDotY) {
+        lastDotX = mx;
+        lastDotY = my;
+        if (dotElRef.current) {
+          dotElRef.current.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
+        }
       }
 
-      // Update ring transform directly
-      if (ringElRef.current) {
-        const rx = ringRef.current.x;
-        const ry = ringRef.current.y;
-        ringElRef.current.style.transform = `translate3d(${rx - 18}px, ${ry - 18}px, 0)`;
+      const rx = Math.round(ringRef.current.x * 10) / 10;
+      const ry = Math.round(ringRef.current.y * 10) / 10;
+      if (rx !== lastRingX || ry !== lastRingY) {
+        lastRingX = rx;
+        lastRingY = ry;
+        if (ringElRef.current) {
+          ringElRef.current.style.transform = `translate3d(${rx - 18}px, ${ry - 18}px, 0)`;
+        }
       }
     };
 
     animFrameId = requestAnimationFrame(render);
 
+    // Single cleanup — no deps means this runs once and never re-registers
     return () => {
       cancelAnimationFrame(animFrameId);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mousemove',  handleMouseMove);
+      window.removeEventListener('mousedown',  handleMouseDown);
+      window.removeEventListener('mouseup',    handleMouseUp);
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [isVisible]);
+  }, []); // ← empty deps: registers once, never leaks
 
   if (!enabled) return null;
 
@@ -102,24 +133,23 @@ export default function CustomCursor() {
         ref={ringElRef}
         className={`absolute top-0 left-0 flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200 ease-out ${
           isCardHovered
-            ? 'scale-[1.7] border-ink-accent bg-ink-accent/20 shadow-[0_0_16px_rgba(140,168,136,0.3)]'
+            ? 'scale-[1.7] border-primary bg-primary/20 shadow-[0_0_16px_rgba(180,197,186,0.3)]'
             : isHovered
-            ? 'scale-[1.5] border-ink-accent bg-ink-accent/15'
+            ? 'scale-[1.5] border-primary bg-primary/15'
             : isMouseDown
-            ? 'scale-[0.85] border-ink-accent/60 bg-ink-accent/10'
-            : 'scale-100 border-ink-accent/45 bg-ink-accent/5'
+            ? 'scale-[0.85] border-primary/60 bg-primary/10'
+            : 'scale-100 border-primary/45 bg-primary/5'
         }`}
       >
-        {/* Small arrow icon inside outer ring when hovering project cards */}
         {isCardHovered && (
-          <ArrowUpRight className="h-3.5 w-3.5 text-ink-text animate-pulse" />
+          <ArrowUpRight className="h-3.5 w-3.5 text-text animate-pulse" />
         )}
       </div>
 
       {/* Main Solid Core Dot */}
       <div
         ref={dotElRef}
-        className={`absolute top-0 left-0 h-2 w-2 rounded-full bg-ink-accent shadow-[0_0_8px_rgba(140,168,136,0.9)] transition-transform duration-100 ease-out ${
+        className={`absolute top-0 left-0 h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(180,197,186,0.9)] transition-transform duration-100 ease-out ${
           isMouseDown ? 'scale-[0.6]' : isHovered ? 'scale-[0.75]' : 'scale-100'
         }`}
       />
